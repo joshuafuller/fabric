@@ -1,5 +1,2469 @@
 # Changelog
 
+## v1.4.188 (2025-08-28)
+
+### Direct commits
+
+- Ci: add tag-based multi-arch Docker publish to GHCR and Docker Hub
+CHANGES
+
+- Add GitHub Actions workflow to publish Docker images on tags
+- Build multi-arch images with Buildx and QEMU across amd64, arm64
+
+- Tag images using semver; push to GHCR and Docker Hub
+- Set :latest only for highest semver tag via imagetools
+
+- Gate patterns workflow steps on detected changes instead of failing
+- Auto-detect GitHub owner and repo from git remote URL
+
+- Remove hardcoded repository values in changelog release manager
+- Normalize image names to lowercase for registry compatibility
+
+- Enable GitHub Actions cache for faster Docker builds
+- Add VS Code dictionary entries for Docker-related terms
+- Chore: upgrade ollama dependency from v0.9.0 to v0.11.7
+• Update ollama package to version 0.11.7
+• Refresh go.sum with new dependency checksums
+
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2025-0317](https://nvd.nist.gov/vuln/detail/CVE-2025-0317)>
+- **CVSS Score**: 7.5 (High)
+
+- **Description**: A vulnerability in ollama/ollama versions <=0.3.14 allows a malicious user to upload and create a customized GGUF model file on the Ollama server. This can lead to a division by zero error in the ggufPadding function, causing the server to crash and resulting in a Denial of Service (DoS) attack.
+- **Affected**: Ollama server versions ≤ 0.3.14
+
+- **Impact**: Denial of Service through division by zero error
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2025-0315](https://nvd.nist.gov/vuln/detail/CVE-2025-0315)>
+
+- **CVSS Score**: 7.5 (High)
+- **Description**: Vulnerability allows Denial of Service via customized GGUF model file upload on Ollama server.
+
+- **Affected**: Ollama/ollama versions ≤ 0.3.14
+- **Impact**: Denial of Service through malicious GGUF model file uploads
+
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2024-12886](https://nvd.nist.gov/vuln/detail/CVE-2024-12886)>
+- **CVSS Score**: 7.5 (High)
+
+- **Description**: An Out-Of-Memory (OOM) vulnerability exists in the ollama server version 0.3.14. This vulnerability can be triggered when a malicious API server responds with a gzip bomb HTTP response, leading to the ollama server crashing.
+- **Affected**: Ollama server version 0.3.14
+
+- **Impact**: Denial of Service through memory exhaustion via gzip bomb attack
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2024-8063](https://nvd.nist.gov/vuln/detail/CVE-2024-8063)>
+
+- **CVSS Score**: 7.5 (High)
+- **Description**: Security vulnerability with high severity rating
+
+- **Impact**: Requires patching for security compliance
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2024-12055](https://nvd.nist.gov/vuln/detail/CVE-2024-12055)>
+
+- **CVSS Score**: 7.5 (High)
+- **Description**: High-severity security vulnerability requiring immediate attention
+
+- **Impact**: Critical security flaw needing remediation
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2025-51471](https://nvd.nist.gov/vuln/detail/CVE-2025-51471)>
+
+- **CVSS Score**: 6.9 (Medium)
+- **Description**: Medium severity security vulnerability
+
+- **Impact**: Security risk requiring patching as part of comprehensive security updates
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2025-46394](https://nvd.nist.gov/vuln/detail/CVE-2025-46394)>
+
+- **CVSS Score**: 3.2 (Low)
+- **Description**: Low-severity security issue
+
+- **Impact**: Minor security concern addressed as part of comprehensive security maintenance
+- **Link**: [<https://nvd.nist.gov/vuln/detail/CVE-2024-58251](https://nvd.nist.gov/vuln/detail/CVE-2024-58251)>
+
+- **CVSS Score**: 2.5 (Low)
+- **Description**: Low-severity security vulnerability
+
+- **Impact**: Minimal security risk addressed for comprehensive security posture
+This comprehensive security fix addresses **8 CVEs*- total:
+- **5 High Severity*- vulnerabilities (CVSS 7.5)
+
+- **1 Medium Severity*- vulnerability (CVSS 6.9)
+- **2 Low Severity*- vulnerabilities (CVSS 3.2 and 2.5)
+The majority of high-severity issues are related to **Ollama server vulnerabilities*- that could lead to Denial of Service attacks through various vectors including division by zero errors, memory exhaustion, and malicious file uploads. These fixes ensure robust protection against these attack vectors and maintain system availability.
+**Priority**: The high-severity Ollama vulnerabilities should be considered critical for any systems running Ollama server components, as they can lead to service disruption and potential system crashes.
+- Chore: remove docker-test framework and simplify production docker setup
+
+- Remove entire docker-test directory and testing infrastructure
+- Delete complex test runner script and environment files
+
+- Simplify production Dockerfile with multi-stage build optimization
+- Remove docker-compose.yml and start-docker.sh helper scripts
+
+- Update README with cleaner Docker usage instructions
+- Streamline container build process and reduce image size
+- Docs: add contributing, security, support, and code-of-conduct docs; add docs index
+CHANGES
+
+- Add CODE_OF_CONDUCT defining respectful, collaborative community behavior
+- Add CONTRIBUTING with setup, testing, PR, changelog requirements
+
+- Add SECURITY policy with reporting process and response timelines
+- Add SUPPORT guide for bugs, features, discussions, expectations
+
+- Add docs README indexing guides, quick starts, contributor essentials
+- Refactor: replace stderr prints with centralized debuglog.Log and improve auth messaging
+
+- Replace fmt.Fprintf/os.Stderr with centralized debuglog.Log across CLI
+- Add unconditional Log function to debuglog for important messages
+
+- Improve OAuth flow messaging and token refresh diagnostics
+- Update tests to capture debuglog output via SetOutput
+
+- Convert Perplexity streaming errors to unified debug logging
+- Emit file write notifications through debuglog instead of stderr
+
+- Warn on ambiguous model selection using centralized logger
+- Announce large audio processing steps via debuglog progress messages
+
+- Standardize extension registry and patterns warnings through debuglog
+- Refactor: route Anthropic beta failure logs through internal debug logger
+CHANGES
+
+- Replace fmt.Fprintf stderr with debuglog.Debug for beta failures
+- Import internal log package and remove os dependency
+
+- Standardize logging level to debuglog.Basic for beta errors
+- Preserve fallback stream behavior when beta features fail
+
+- Maintain message send fallback when beta options fail
+- Docs: update README with Venice AI provider and Windows install script
+
+- Add Venice AI provider configuration with API endpoint
+- Document Venice AI as privacy-first open-source provider
+
+- Include PowerShell installation script for Windows users
+- Add debug levels section to table of contents
+
+- Update recent major features with v1.4.294 release notes
+- Configure Venice AI base URL and response settings
+- Feat: add --debug flag with levels and centralized logging
+CHANGES
+
+- Add --debug flag controlling runtime logging verbosity levels
+- Introduce internal/log package with Off, Basic, Detailed, Trace
+
+- Replace ad-hoc Debugf and globals with centralized debug logger
+- Wire debug level during early CLI argument parsing
+
+- Add bash, zsh, fish completions for --debug levels
+- Document debug levels in README with usage examples
+
+- Add comprehensive STT guide covering models, flags, workflows
+- Simplify splitAudioFile signature and log ffmpeg chunking operations
+
+- Remove FABRIC_STT_DEBUG environment variable and related code
+- Clean minor code paths in vendors and template modules
+- Feat: highlight default vendor/model in listings, pass registry defaults
+CHANGES
+
+- Update PrintWithVendor signature to accept default vendor and model
+- Mark default vendor/model with asterisk in non-shell output
+
+- Compare vendor and model case-insensitively when marking
+- Pass registry defaults to PrintWithVendor from CLI
+
+- Add test ensuring default selection appears with asterisk
+- Keep shell completion output unchanged without default markers
+- Docs: update version number in README updates section from v1.4.290 to v1.4.291
+- Feat: add speech-to-text via OpenAI with transcription flags and completions
+CHANGES
+
+- Add --transcribe-file flag to transcribe audio or video
+- Add --transcribe-model flag with model listing and completion
+
+- Add --split-media-file flag to chunk files over 25MB
+- Implement OpenAI transcription using Whisper and GPT-4o Transcribe
+
+- Integrate transcription pipeline into CLI before readability processing
+- Provide zsh, bash, fish completions for new transcription flags
+
+- Validate media extensions and enforce 25MB upload limits
+- Update README with release and corrected pattern link path
+- Feat: add per-pattern model mapping support via environment variables
+• Add per-pattern model mapping documentation section
+• Implement environment variable lookup for pattern-specific models
+• Support vendor|model format in environment variable specification
+• Check pattern-specific model when no model explicitly set
+• Transform pattern names to uppercase environment variable format
+• Add table of contents entry for new feature
+• Enable shell startup file configuration for patterns
+- Feat: add --no-variable-replacement flag to disable pattern variable substitution
+
+- Introduce CLI flag to skip pattern variable replacement.
+- Wire flag into domain request and session builder.
+
+- Avoid applying input variables when replacement is disabled.
+- Provide PatternsEntity.GetWithoutVariables for input-only pattern processing support.
+
+- Refactor patterns code into reusable load and apply helpers.
+- Update bash, zsh, fish completions with new flag.
+
+- Document flag in README and CLI help output.
+- Add unit tests covering GetWithoutVariables path and behavior.
+
+- Ensure {{input}} placeholder appends when missing in patterns.
+- Fix: improve YouTube subtitle language fallback handling in yt-dlp integration
+
+- Fix typo "Gemmini" to "Gemini" in README
+- Add "kballard" and "shellquote" to VSCode dictionary
+
+- Add "YTDLP" to VSCode spell checker
+- Enhance subtitle language options with fallback variants
+
+- Build language options string with comma-separated alternatives
+- Feat: add release updates section and Gemini thinking support
+
+- Add comprehensive "Recent Major Features" section to README
+- Introduce new readme_updates Python script for automation
+
+- Enable Gemini thinking configuration with token budgets
+- Update CLI help text for Gemini thinking support
+
+- Add comprehensive test coverage for Gemini thinking
+- Create documentation for README update automation
+
+- Reorganize README navigation structure with changelog section
+- Refactor: extract token budget constants for thinking levels with validation bounds
+
+- Extract hardcoded token values into named constants
+
+- Add comprehensive documentation for token budget purposes
+- Implement token validation bounds (1-10000) in parsing
+
+- Replace magic numbers with semantic constant references
+- Improve code maintainability through constant extraction
+- Feat: add cross-provider --thinking flag mapping to Anthropic/OpenAI
+CHANGES
+
+- Add --thinking flag to set reasoning level cross-vendors
+- Map Anthropic thinking levels and token budgets appropriately
+
+- Translate OpenAI reasoning effort from thinking levels
+- Propagate Thinking through ChatOptions, server, and dry-run output
+
+- Update zsh, bash, fish completions with thinking choices
+- Expand suggest_pattern docs with categories, workflows, usage examples
+
+- Remove outdated suggest_pattern user files to avoid duplication
+- Add VSCode dictionary terms: Anki, DMARC, wireframes
+
+- Extend tests to include Thinking defaults in ChatOptions
+- Chore: upgrade anthropic-sdk-go to v1.9.1 and add beta feature support for context-1m
+
+- Upgrade anthropic-sdk-go from v1.7.0 to v1.9.1
+
+- Upgrade golang.org/x/crypto from v0.39.0 to v0.40.0
+- Add modelBetas map for beta feature configuration
+
+- Implement context-1m-2025-08-07 beta for Claude Sonnet 4
+- Add beta header support in streaming requests
+
+- Add beta header support in standard requests
+- Implement fallback mechanism when beta features fail
+
+- Preserve existing beta headers in OAuth transport
+- Add test coverage for model beta configuration
+- Chore: incoming 1695 changelog entry
+- Refactor: standardize obtain_completion_files logging; use stderr-only printf
+CHANGES
+
+- Replace print_info with tagged printf directed to stderr.
+- Replace print_dry_run with tagged printf directed to stderr.
+
+- Add comment enforcing stderr-only output inside this function.
+- Preserve dry-run behavior by echoing path only on stdout.
+
+- Retain error handling using print_error for directory creation.
+- Normalize log message prefixes to [INFO] and [DRY-RUN].
+
+- Avoid stdout pollution by routing informational messages to stderr.
+- Fix: convert GitHub blob/tree URLs to raw and validate completion downloads
+CHANGES
+
+- Add helper to translate GitHub blob/tree to raw URLs
+- Use effective URL in curl and wget download paths
+
+- Validate downloaded files are non-empty and not HTML
+- Redirect info and dry-run messages to standard error
+
+- Relocate temporary directory cleanup trap into main execution
+- Improve error messages when completion download sources appear invalid
+- Docs: add quick install method for shell completions without cloning repo
+
+- Add one-liner curl install for completions
+
+- Support downloading completions when files missing locally
+- Add dry-run option for preview changes
+
+- Enable custom download source via environment variable
+- Create temp directory for downloaded completion files
+
+- Add automatic cleanup of temporary files
+- Update documentation with new installation methods
+- Chore: incoming 1692 changelog entry
+- Feat: add -V/--vendor flag and vendor-aware model selection
+CHANGES
+
+- Add -V/--vendor flag to specify model vendor
+- Implement vendor-aware model resolution and availability validation
+
+- Warn on ambiguous models; suggest --vendor to disambiguate
+- Update bash, zsh, fish completions with vendor suggestions
+
+- Extend --listmodels to print vendor|model when interactive
+- Add VendorsModels.PrintWithVendor; sort vendors and models alphabetically
+
+- Pass vendor through API; update server chat handler
+- Standardize docs and errors to --yt-dlp-args="..." syntax
+
+- Add test covering ambiguous model warning across multiple vendors
+- Promote go-shellquote to direct dependency in go.mod
+- Feat: enhance completions with 'fabric-ai' alias, dynamic exec, installer
+CHANGES
+
+- Support 'fabric-ai' alias across Zsh, Bash, and Fish
+- Use invoked command for dynamic completion list queries
+
+- Refactor Fish completions into reusable registrar for multiple commands
+- Update Bash completion to reference executable via COMP_WORDS[0]
+
+- Extend Zsh compdef to register fabric and fabric-ai
+- Add cross-shell installer script with autodetection and dry-run mode
+
+- Document installation, features, troubleshooting in new completions guide
+- Chore: incoming 1687 changelog entry
+- Feat(gemini): enable web search, citations, and search-location validation
+CHANGES
+
+- Enable Gemini models to use web search tool
+- Validate search-location timezone or language code formats
+
+- Normalize language codes from underscores to hyphenated form
+- Inject Google Search tool when --search flag enabled
+
+- Append deduplicated web citations under standardized Sources section
+- Improve robustness for nil candidates and content parts
+
+- Factor generation config builder for reuse in streaming
+- Update CLI help and completions to include Gemini
+- Chore: incoming 1686 changelog entry
+- Fix: prevent duplicate text output in OpenAI streaming responses
+
+- Skip processing of ResponseOutputTextDone events
+
+- Prevent doubled text in stream output
+- Add clarifying comment about API behavior
+
+- Maintain delta chunk streaming functionality
+- Fix duplicate content issue in responses
+- Chore: incoming 1685 changelog entry
+- Fix(gemini): map chat roles to Gemini user/model in convertMessages
+CHANGES
+
+- Map assistant role to model per Gemini constraints
+- Map system, developer, function, tool roles to user
+
+- Default unrecognized roles to user to preserve instruction context
+- Add unit test validating convertMessages role mapping logic
+
+- Import chat package in tests for role constants
+- Docs: update release notes
+- Chore: incoming 1681 changelog entry
+- Refactor: replace custom arg parser with shellquote; precompile regexes
+CHANGES
+
+- Precompile regexes for video, playlist, VTT tags, durations.
+- Parse yt-dlp additional arguments using shellquote.Split for safety.
+
+- Validate user-provided yt-dlp args and surface quoting errors.
+- Reuse compiled regex in GetVideoOrPlaylistId extractions for stability.
+
+- Simplify removeVTTTags by leveraging precompiled VTT tag matcher.
+- Parse ISO-8601 durations with precompiled pattern for efficiency.
+
+- Replace inline VTT language regex with cached compiled matcher.
+- Remove unused findVTTFiles helper and redundant language checks.
+
+- Add go-shellquote dependency in go.mod and go.sum.
+- Reduce allocations by eliminating per-call regexp.MustCompile invocations.
+- Docs: update release notes
+- Chore: incoming 1681 changelog entry
+- Feat: add smart subtitle language fallback when requested locale unavailable
+CHANGES
+
+- Introduce findVTTFilesWithFallback to handle subtitle language absence
+- Prefer requested language VTT, gracefully fallback to available alternatives
+
+- Auto-detect downloaded subtitle language and proceed without interruption
+- Update yt-dlp processing to use fallback-aware VTT discovery
+
+- Document language fallback behavior and provide usage example
+- Return first available VTT when no specific language requested
+
+- Detect language-coded filenames using regex for robust matching
+- Docs: update YouTube processing documentation for yt-dlp argument precedence control
+
+- Add user argument precedence over built-in flags
+
+- Document argument order and override behavior
+- Include new precedence section with detailed explanation
+
+- Add override examples for language and format
+- Update tips section with precedence guidance
+
+- Modify Go code to append user args last
+- Add testing tip for subtitle language discovery
+
+- Include practical override use case examples
+- Feat: add `--yt-dlp-args` flag for custom YouTube downloader options
+
+- Introduce `--yt-dlp-args` flag for advanced control
+
+- Allow passing browser cookies for authentication
+- Improve error handling for YouTube rate limits
+
+- Add comprehensive documentation for YouTube processing
+- Refactor YouTube methods to accept additional arguments
+
+- Update shell completions to include new flag
+- Merge branch 'main' into 0803-youtube-transcript-lang-fix
+- Chore: format fix
+- Chore: incoming 1679 changelog entry
+- Feat(cli): add cross-platform desktop notifications with secure custom commands
+CHANGES
+
+- Integrate notification sending into chat processing workflow
+- Add --notification and --notification-command CLI flags and help
+
+- Provide cross-platform providers: macOS, Linux, Windows with fallbacks
+- Escape shell metacharacters to prevent injection vulnerabilities
+
+- Truncate Unicode output safely for notification message previews
+- Update bash, zsh, fish completions with new notification options
+
+- Add docs and YAML examples for configuration and customization
+- Add unit tests for providers and notification integration paths
+- Ci: add write permissions to update_release_notes job
+
+- Add contents write permission to release notes job
+
+- Enable GitHub Actions to modify repository contents
+- Fix potential permission issues during release process
+- Chore: incoming 1676 changelog entry
+- Feat: add 'gpt-5' to raw-mode models in OpenAI client
+
+- Add gpt-5 to raw mode model requirements list.
+- Ensure gpt-5 responses bypass structured chat message formatting.
+
+- Align NeedsRawMode logic with expanded OpenAI model support.
+- Docs: document GetTokenFromEnv behavior and token environment fallback
+- Docs: document GetTokenFromEnv behavior and token environment fallback
+- Chore: incoming 1676 changelog entry
+- Refactor: centralize GitHub token retrieval logic into utility function
+
+- Extract token retrieval into `util.GetTokenFromEnv` function
+
+- Support both `GITHUB_TOKEN` and `GH_TOKEN` environment variables
+- Replace direct `os.Getenv` calls with utility function
+
+- Add new `util/token.go` file for token handling
+- Update walker.go to use centralized token logic
+
+- Update main.go to use token utility function
+- Chore: incoming 1673 changelog entry
+- Fix: ensure Anthropic client always sets temperature to override API default
+
+- Always set temperature parameter for consistent behavior
+
+- Prioritize TopP over temperature when explicitly set
+- Override Anthropic's default 1.0 with Fabric's 0.7
+
+- Add comprehensive tests for parameter precedence logic
+- Update VSCode dictionary with Keploy entry
+
+- Simplify conditional logic for temperature/TopP selection
+- Chore: incoming 1673 changelog entry
+- Refactor: improve chat parameter defaults handling with domain constants
+
+- Add domain constants for default chat parameter values
+
+- Update Anthropic client to check explicitly set parameters
+- Add documentation linking CLI flags to domain defaults
+
+- Improve temperature and TopP parameter selection logic
+- Ensure consistent default values across CLI and domain
+
+- Replace zero-value checks with explicit default comparisons
+- Centralize chat option defaults in domain package
+- Chore: incoming 1673 changelog entry
+- Ci: refactor release workflow to use shared version job and simplify OS handling
+- Chore: incoming 1673 changelog entry
+- Fix: update anthropic SDK and refactor release workflow for release notes generation
+
+- Upgrade anthropic-sdk-go from v1.4.0 to v1.7.0
+
+- Move changelog generation to separate workflow job
+- Add Claude Opus 4.1 model support
+
+- Fix temperature/topP parameter conflict for models
+- Separate release artifact upload from changelog update
+
+- Add dedicated update_release_notes job configuration
+- Chore: remove redundant words
+Signed-off-by: queryfast <queryfast@outlook.com>
+- Ci: separate release notes generation into dedicated job
+
+- Move changelog generation to separate workflow job
+
+- Add fallback logic for YouTube subtitle language detection
+- Remove changelog commands from main release job
+
+- Create dedicated update_release_notes job with Go setup
+- Implement retry mechanism without language specification
+
+- Improve yt-dlp command argument construction flexibility
+- Add proper checkout and Go configuration steps
+- Fix typos in t_ patterns
+- Chore: incoming 1658 changelog entry
+- Chore: Update changelog cache db
+- Feat: add database sync before generating changelog in release workflow
+
+- Add database sync command to release workflow
+- Ensure changelog generation includes latest database updates
+- Chore: incoming 1657 changelog entry
+- Feat: add GitHub release description update with AI summary
+
+- Add `--release` flag to command line options documentation
+
+- Enable AI summary updates for GitHub releases
+- Support version-specific release description updates
+
+- Reorder internal package imports for consistency
+- Feat: add GitHub release description update via `--release` flag
+
+- Add `--release` flag to generate_changelog to update GitHub release
+
+- Implement `ReleaseManager` for managing release descriptions
+- Create `release.go` for handling release updates
+
+- Update `release.yml` to run changelog generation
+- Ensure mutual exclusivity for `--release` with other flags
+
+- Modify `Config` struct to include `Release` field
+- Update `main.go` to handle new release functionality
+- Chore: incoming 1654 changelog entry
+- Fix: prevent file overwrite and improve output messaging in CreateOutputFile
+
+- Add file existence check before creating output file
+
+- Return error if target file already exists
+- Change success message to write to stderr
+
+- Update message format with brackets for clarity
+- Prevent accidental file overwrites during output creation
+- Chore: incoming 1653 changelog entry
+- Docs: update Gemini TTS model references to gemini-2.5-flash-preview-tts
+
+- Update documentation examples to use gemini-2.5-flash-preview-tts
+
+- Replace gemini-2.0-flash-tts references throughout Gemini-TTS.md
+- Update voice selection example commands
+
+- Modify CLI help text example command
+- Update changelog database binary file
+- Chore: differentiate voice descriptions
+- Chore: incoming 1652 changelog entry
+- Feat: add Gemini TTS voice selection and listing functionality
+
+- Add `--voice` flag for TTS voice selection
+
+- Add `--list-gemini-voices` command for voice discovery
+- Implement voice validation for Gemini TTS models
+
+- Update shell completions for voice options
+- Add comprehensive Gemini TTS documentation
+
+- Create voice samples directory structure
+- Extend spell checker dictionary with voice names
+- Fix: correct audio data extraction to avoid double byte conversion
+
+- Remove redundant byte conversion from audio data extraction
+
+- Extract audio data as string before converting once
+- Simplify audio data processing in chat handler
+
+- Fix potential data corruption in audio output
+- Fix: initialize Parts slice in genai.Content struct to prevent nil pointer errors
+
+- Initialize Parts slice with empty slice in Content struct
+
+- Prevent potential nil pointer dereference during message conversion
+- Ensure Parts field is ready for append operations
+
+- Improve robustness of convertMessages function in Gemini client
+- Chore: minor format fix
+- Chore: more spelling words
+- Refactor: extract TTS methods and add audio validation with security limits
+
+- Extract text extraction logic into separate method
+
+- Add GenAI client creation helper function
+- Split TTS generation into focused helper methods
+
+- Add audio data size validation with security limits
+- Implement MIME type validation for audio responses
+
+- Add WAV file generation input validation checks
+- Pre-allocate buffer capacity for better performance
+
+- Define audio constants for reusable configuration
+- Add comprehensive error handling for edge cases
+
+- Validate generated WAV data before returning results
+- Chore: update changelog generation to sync database
+
+- Add database sync command to changelog workflow
+
+- Remove unnecessary newline addition in changelog processing
+- Chore: incoming 1650 changelog entry
+- Chore: update Gemini SDK to new genai library and add TTS audio output support
+
+- Replace deprecated generative-ai-go with google.golang.org/genai library
+
+- Add TTS model detection and audio output validation
+- Implement WAV file generation for TTS audio responses
+
+- Add audio format checking utilities in CLI output
+- Update Gemini client to support streaming with new SDK
+
+- Add "Kore" and "subchunk" to VSCode spell checker dictionary
+- Remove extra blank line from changelog formatting
+
+- Update dependency imports and remove unused packages
+- Docs: minor formatting of CHANGELOG
+- Chore: incoming 1649 changelog entry
+- Feat: prevent unconfigured API initialization and add Docker test suite
+
+- Add BEDROCK_AWS_REGION requirement for Bedrock initialization
+
+- Implement IsConfigured check for Ollama API URL
+- Create comprehensive Docker testing environment with 6 scenarios
+
+- Add interactive test runner with shell access
+- Include environment files for different API configurations
+
+- Update spell checker dictionary with new test terms
+- Document testing workflow and expected results
+- Chore: incoming 1647 changelog entry
+- Chore: replace git tag lookup with version.nix file reading for release workflow
+
+- Remove OS-specific git tag retrieval steps
+
+- Add unified version extraction from nix file
+- Include version format validation with regex check
+
+- Add error handling for missing version file
+- Consolidate cross-platform version logic into single step
+
+- Use bash shell for consistent version parsing
+- Chore: incoming 1642 changelog entry
+- Fix: improve error message formatting in version date parsing
+
+- Add actual error details to date parsing failure message
+
+- Include error variable in stderr output formatting
+- Enhance debugging information for invalid date formats
+- Refactor: simplify merge pattern management by removing unnecessary struct wrapper
+
+- Remove mergePatternManager struct wrapper for patterns
+
+- Replace struct fields with package-level variables
+- Simplify getMergePatterns function implementation
+
+- Clean up merge commit detection documentation
+- Reduce code complexity in pattern initialization
+
+- Maintain thread-safe lazy initialization with sync.Once
+- Chore: standardize logging output format and improve error messages in changelog generator
+
+- Replace emoji prefixes with bracketed text labels
+
+- Standardize synchronization step logging format across methods
+- Simplify version existence check error message text
+
+- Update commit author email extraction comment clarity
+- Maintain consistent stderr output formatting throughout sync process
+- Chore: incoming 1642 changelog entry
+- Refactor: improve error handling and simplify merge pattern management in changelog generation
+
+- Remove unused runtime import from processing.go
+
+- Simplify date parsing error messages in cache
+- Replace global merge pattern variables with struct
+
+- Use sync.Once for thread-safe pattern initialization
+- Remove OS-specific file deletion instructions from errors
+
+- Clean up merge commit detection function documentation
+- Eliminate redundant error variable in date parsing
+- Chore: incoming 1642 changelog entry
+- Fix: improve error reporting in date parsing and merge commit detection
+
+- Capture first RFC3339Nano parsing error for better diagnostics
+
+- Display both RFC3339Nano and RFC3339 errors in output
+- Extract merge patterns to variable for cleaner code
+
+- Improve error message clarity in date parsing failures
+- Feat: add cross-platform file removal instructions for changelog generation
+
+- Import runtime package for OS detection
+
+- Add Windows-specific file deletion commands in error messages
+- Provide both Command Prompt and PowerShell alternatives
+
+- Maintain existing Unix/Linux rm command for non-Windows systems
+- Improve user experience across different operating systems
+- Chore: incoming 1642 changelog entry
+- Refactor: replace sync.Once with mutex for merge patterns initialization
+
+- Replace sync.Once with mutex and boolean flag
+
+- Add thread-safe initialization check for merge patterns
+- Remove overly broad merge pattern regex rule
+
+- Improve error messaging for file removal failures
+- Clarify filesystem vs git index error contexts
+
+- Add detailed manual intervention instructions for failures
+- Chore: incoming 1642 changelog entry
+- Perf: optimize merge pattern matching with lazy initialization and sync.Once
+
+- Add sync package import for concurrency safety
+
+- Implement lazy initialization for merge patterns using sync.Once
+- Wrap merge patterns in getMergePatterns function
+
+- Replace direct mergePatterns access with function call
+- Ensure thread-safe pattern compilation on first use
+- Chore: incoming 1642 changelog entry
+- Refactor: improve merge commit detection and update error messages
+
+- Move merge patterns to package-level variables
+
+- Update date parsing error message for clarity
+- Simplify author email field comment
+
+- Extract regex compilation from function scope
+- Improve merge commit detection performance
+
+- Clarify RFC3339 fallback error context
+- Fix: improve warning message clarity for invalid commit timestamps
+
+- Simplify warning message for invalid commit timestamps
+
+- Remove parenthetical explanation about git history rewrites
+- Make error message more concise and readable
+- Chore: optimize error logging and regex pattern matching for better performance
+
+- Remove redundant RFC3339Nano parsing error message
+
+- Enhance RFC3339 error message with version name
+- Pre-compile regex patterns for merge commit detection
+
+- Replace regexp.MatchString with compiled pattern matching
+- Improve merge commit pattern matching performance
+
+- Add structured regex compilation for better efficiency
+- Fix: improve error handling and guidance for file removal failures
+
+- Replace generic warning with detailed error message
+
+- Add step-by-step manual intervention instructions
+- Provide multiple recovery options for users
+
+- Separate git and filesystem error reporting
+- Include specific commands for manual cleanup
+- Docs: improve code comments for version pattern and PR commit fields
+
+- Expand version pattern regex documentation with examples
+
+- Add matching and non-matching commit message examples
+- Clarify version pattern behavior with optional prefix
+
+- Update PR commit field comments for clarity
+- Document email field availability from GitHub API
+
+- Simplify timestamp and parents field descriptions
+- Feat: improve changelog entry creation and error messages
+
+- Rename `changelogDate` to `versionDate` for clarity
+
+- Enhance error message for git index removal failure
+- Add comments for `versionPattern` regex in `walker.go`
+- Chore: incoming 1642 changelog entry
+- Chore: improve error message clarity in changelog generation and cache operations
+
+- Clarify RFC3339Nano date parsing error message
+
+- Improve PR batch cache save error description
+- Add context for commit timestamp fallback warning
+
+- Specify git index in file removal error message
+- Chore: incoming 1642 changelog entry
+- Chore: improve error logging and documentation in changelog generation components
+
+- Add date string to RFC3339 parsing error messages
+
+- Enhance isMergeCommit function documentation with detailed explanation
+- Document calculateVersionDate function with comprehensive behavior description
+
+- Improve error context for date parsing failures
+- Add implementation details for merge commit detection methods
+
+- Clarify fallback behavior in version date calculation
+- Chore: incoming 1642 changelog entry
+- Chore: improve error message clarity in version existence check for git history sync
+
+- Enhance warning message with additional context details
+
+- Add guidance for users when version check fails
+- Improve error handling feedback in sync operation
+
+- Provide actionable steps for troubleshooting sync issues
+- Chore: incoming 1642 changelog entry
+- Feat: add email field support and improve error logging in changelog generation
+
+- Add Email field to PRCommit struct for author information
+
+- Extract version date calculation into reusable helper function
+- Redirect error messages from stdout to stderr properly
+
+- Populate commit email from GitHub API responses correctly
+- Add comprehensive test coverage for email field handling
+
+- Remove duplicate version date calculation code blocks
+- Import os package for proper stderr output handling
+- Feat: improve timestamp handling and merge commit detection in changelog generator
+
+- Add debug logging for date parsing failures
+
+- Pass forcePRSync parameter explicitly to fetchPRs method
+- Implement comprehensive merge commit detection using parents
+
+- Capture actual commit timestamps from GitHub API
+- Calculate version dates from most recent commit
+
+- Add parent commit SHAs for merge detection
+- Use real commit dates instead of current time
+
+- Add timestamp validation with fallback handling
+- Chore: incoming 1642 changelog entry
+- Feat: add database synchronization and improve changelog processing workflow
+
+- Add database sync command with comprehensive validation
+
+- Implement version and commit existence checking methods
+- Enhance time parsing with RFC3339Nano fallback support
+
+- Cache fetched PRs during changelog entry creation
+- Remove individual incoming files using git operations
+
+- Add sync-db flag for database integrity validation
+- Improve commit-PR mapping verification process
+
+- Exclude incoming directory from workflow trigger paths
+- Docs: clean up duplicate CHANGELOG for v1.4.262
+- Docs: Update CHANGELOG after v1.4.263
+- Chore: incoming 1641 changelog entry
+- Chore: extend proxy timeout in `vite.config.ts` to 15 minutes
+
+- Increase `/api` proxy timeout to 900,000 ms
+
+- Increase `/names` proxy timeout to 900,000 ms
+- Docs: Remove duplicated section.
+- Chore: fix tests for generate_changelog
+- Chore: adjust `insertVersionAtTop` for consistent newline handling
+- Chore: adjust newline handling in `insertVersionAtTop` method
+- Chore: trim leading newline in changelog entry content
+- Chore: simplify direct commits content handling in changelog generation
+- Refactor: rename ProcessIncomingPRs to CreateNewChangelogEntry for clarity
+
+- Rename ProcessIncomingPRs method to CreateNewChangelogEntry
+
+- Update method comment to reflect new name
+- Update main.go to call renamed method
+
+- Reduce newline spacing in content formatting
+- Chore: incoming 1640 changelog entry
+- Fix: formatting fixes in tests.
+- Feat: enhance changelog generator to accept version parameter for PR processing
+
+- Pass version parameter to changelog generation workflow
+
+- Update ProcessIncomingPRs method to accept version string
+- Add commit SHA tracking to prevent duplicate entries
+
+- Modify process-prs flag to require version parameter
+- Improve changelog formatting with proper spacing
+
+- Update configuration to use ProcessPRsVersion string field
+- Enhance direct commit filtering with SHA exclusion
+
+- Update documentation to reflect version parameter requirement
+- Feat: enhance changelog generation to avoid duplicate commit entries
+
+- Extract PR numbers from processed changelog files
+
+- Pass processed PRs map to direct commits function
+- Filter out commits already included via PR files
+
+- Reduce extra newlines in changelog version insertion
+- Add strconv import for PR number parsing
+
+- Prevent duplicate entries between PRs and direct commits
+- Improve changelog formatting consistency
+- Fix: ensure the PR#.txt file ends with a newline.
+- Feat: change push behavior from opt-out to opt-in with GitHub token auth
+
+- Change `NoPush` config field to `Push` boolean
+
+- Update CLI flag from `--no-push` to `--push`
+- Add GitHub token authentication for push operations
+
+- Import `os` and HTTP transport packages
+- Reverse push logic to require explicit enable
+
+- Update documentation for new push behavior
+- Add automatic GitHub repository detection for auth
+- Chore: update gitignore and simplify changelog generator error handling
+
+- Add .claude/ directory to gitignore exclusions
+
+- Update comment clarity for SilenceUsage flag
+- Remove redundant error handling in main function
+
+- Simplify command execution without explicit error checking
+- Fix CLI error handling and improve git status validation
+
+- Add SilenceUsage to prevent help output on errors
+- Add GetStatusDetails method to show which files are dirty
+
+- Include direct commits in ProcessIncomingPRs for complete AI summaries
+- Chore: add automated changelog processing for CI/CD integration
+
+- Add incoming PR preprocessing with validation
+
+- Implement release aggregation for incoming files
+- Create git operations for staging changes
+
+- Add comprehensive test coverage for processing
+- Extend GitHub client with validation methods
+
+- Support version detection from nix files
+- Include documentation for automated workflow
+
+- Add command flags for PR processing
+- Docs: Update CHANGELOG after v1.4.261
+- Chore: update `NeedsRawMode` to include `mistral` prefix
+
+- Add `mistral` to `ollamaPrefixes` list.
+- Docs: Update CHANGELOG after v1.4.260
+- Chore: add API key setup question to Exolab AI plugin configuration
+
+- Add "openaiapi" to VSCode spell check dictionary
+
+- Include API key setup question in Exolab client
+- Configure API key as required field for setup
+
+- Maintain existing API base URL configuration order
+- Docs: Update CHANGELOG after v1.4.259
+- Feat: improve timestamp parsing to handle fractional seconds in YouTube tool
+
+- Move timestamp regex initialization to init function
+
+- Add parseSeconds helper function for fractional seconds
+- Replace direct strconv.Atoi calls with parseSeconds function
+
+- Support decimal seconds in timestamp format parsing
+- Extract seconds parsing logic into reusable function
+- Fix: Youtube VTT parsing gap test
+- Feat: enhance VTT duplicate filtering to allow legitimate repeated content
+
+- Fix regex escape sequence for timestamp parsing
+
+- Add configurable time gap constant for repeat detection
+- Track content with timestamps instead of simple deduplication
+
+- Implement time-based repeat inclusion logic for choruses
+- Add timestamp parsing helper functions for calculations
+
+- Allow repeated content after significant time gaps
+- Preserve legitimate recurring phrases while filtering duplicates
+- Chore: refactor timestamp regex and seenSegments logic
+
+- Update `timestampRegex` to support optional seconds/milliseconds
+
+- Change `seenSegments` to use `struct{}` for memory efficiency
+- Refactor duplicate check using `struct{}` pattern
+
+- Improve readability by restructuring timestamp logic
+- Chore: refactor timestamp regex to global scope and add spell check words
+
+- Move timestamp regex to global package scope
+
+- Remove duplicate regex compilation from isTimeStamp function
+- Add "horts", "mbed", "WEBVTT", "youtu" to spell checker
+
+- Improve regex performance by avoiding repeated compilation
+- Clean up code organization in YouTube module
+- Fix: prevent duplicate segments in VTT file processing
+
+- Add deduplication map to track seen segments
+- Skip duplicate text segments in plain VTT processing
+
+- Skip duplicate segments in timestamped VTT processing
+- Improve timestamp regex to handle more formats
+
+- Use clean text as deduplication key consistently
+- Docs: Update CHANGELOG after v1.4.258
+- Chore: define constants for file and directory permissions
+- Chore: improve error handling in `ensureEnvFile` function
+- Refactor: improve error handling and permissions in `ensureEnvFile`
+- Feat: add startup check to initialize config and .env file
+
+- Introduce ensureEnvFile function to create ~/.config/fabric/.env if missing.
+- Add directory creation for config path in ensureEnvFile.
+
+- Integrate setup flag in CLI to call ensureEnvFile on demand.
+- Handle errors for home directory detection and file operations.
+- Docs: Update README and CHANGELOG after v1.4.257
+- Feat: add disable-responses-api flag for OpenAI compatibility
+
+- Add disable-responses-api flag to CLI completions
+
+- Update zsh completion with new API flag
+- Update bash completion options list
+
+- Add fish shell completion for API flag
+- Add testpattern to VSCode spell checker dictionary
+
+- Configure disableResponsesAPI in example YAML config
+- Enable flag for llama-server compatibility
+- Feat: add OpenAI Responses API configuration control via CLI flag
+
+- Add `--disable-responses-api` CLI flag for OpenAI control
+
+- Implement `SetResponsesAPIEnabled` method in OpenAI client
+- Configure OpenAI Responses API setting during CLI initialization
+
+- Update default config path to `~/.config/fabric/config.yaml`
+- Add OpenAI import to CLI package dependencies
+- Docs: Update CHANGELOG after v1.4.256
+- Refactor: extract flag parsing logic into separate extractFlag function
+- Fix: improve error handling for default config path resolution
+
+- Update `GetDefaultConfigPath` to return error alongside path
+
+- Add proper error handling in flags initialization
+- Include debug logging for config path failures
+
+- Move channel close to defer in dryrun SendStream
+- Return wrapped errors with context messages
+
+- Handle non-existent config as valid case
+- Fix: improve dry run output formatting and config path error handling
+
+- Remove leading newline from DryRunResponse constant
+
+- Add newline separator in SendStream method output
+- Add newline separator in Send method output
+
+- Improve GetDefaultConfigPath error handling logic
+- Add stderr error message for config access failures
+
+- Return empty string when config file doesn't exist
+- Chore: refactor `constructRequest` method for consistency
+
+- Rename `_ConstructRequest` to `constructRequest` for consistency
+
+- Update `SendStream` to use `constructRequest`
+- Update `Send` method to use `constructRequest`
+- Chore: remove unneeded parenthesis around function call
+- Chore: update `Send` method to append `request` to `DryRunResponse`
+
+- Assign `_ConstructRequest` output to `request` variable
+
+- Concatenate `request` with `DryRunResponse` in `Send` method
+- Feat: improve flag handling and add default config support
+
+- Map both short and long flags to yaml tags
+
+- Add support for short flag parsing with dashes
+- Implement default ~/.fabric.yaml config file detection
+
+- Fix think block suppression in dry run mode
+- Add think options to dry run output formatting
+
+- Refactor dry run response construction into helper method
+- Return actual response content from dry run client
+
+- Create utility function for default config path resolution
+- Docs: Update CHANGELOG after v1.4.255
+- Merge branch 'danielmiessler:main' into main
+- Chore: add more paths to update-version-andcreate-tag workflow to reduce unnecessary tagging
+- Adds generate code rules pattern
+Signed-off-by: Roberto Carvajal <roberto.carvajal@gmail.com>
+- Docs: Update CHANGELOG after v1.4.253
+- Feat: add 'think' tag options for text suppression and completion
+
+- Remove outdated update notes from README
+
+- Add `--suppress-think` option to suppress 'think' tags
+- Introduce `--think-start-tag` and `--think-end-tag` options
+
+- Update bash completion with 'think' tag options
+- Update fish completion with 'think' tag options
+- Docs: Update CHANGELOG after v.1.4.252
+- Perf: add regex caching to `StripThinkBlocks` function for improved performance
+- Feat: add suppress-think feature to filter AI reasoning output
+
+- Add suppress-think flag to hide thinking blocks
+
+- Configure customizable start and end thinking tags
+- Strip thinking content from final response output
+
+- Update streaming logic to respect suppress-think setting
+- Add YAML configuration support for thinking options
+
+- Implement StripThinkBlocks utility function for content filtering
+- Add comprehensive tests for thinking suppression functionality
+- Chore: Update CHANGELOG after v1.4.251
+- Ci: update workflow to ignore additional paths during version updates
+
+- Add `data/strategies/**` to paths-ignore list
+
+- Add `cmd/generate_changelog/*.db` to paths-ignore list
+- Prevent workflow triggers from strategy data changes
+
+- Prevent workflow triggers from changelog database files
+- Docs: Update changelog with v1.4.249 changes
+- Chore: add log message for missing PRs in cache
+- Feat: preserve PR numbers during version cache merges
+
+- Enhance changelog to associate PR numbers with version tags
+
+- Improve PR number parsing with proper error handling
+- Collect all PR numbers for commits between version tags
+
+- Associate aggregated PR numbers with each version entry
+- Update cached versions with newly found PR numbers
+
+- Add check for missing PRs to trigger sync if needed
+- Fix: improve PR number parsing with proper error handling
+- Feat: enhance changelog to correctly associate PR numbers with version tags
+
+- Collect all PR numbers for commits between version tags.
+
+- Associate aggregated PR numbers with each version entry.
+- Update cached versions with newly found PR numbers.
+
+- Attribute all changes in a version to relevant PRs.
+- Docs: reorganize v1.4.247 changelog to attribute changes to PR #1613
+- Chore: update logging output to use os.Stderr
+- Fix: improve error handling in plugin registry configuration
+- Chore: remove debug logging and sync custom patterns directory configuration
+
+- Remove debug stderr logging from content summarization
+
+- Add custom patterns directory to PatternsLoader configuration
+- Ensure consistent patterns directory setup across components
+
+- Clean up unnecessary console output during summarization
+- Feat: improve error handling in `plugin_registry` and `patterns_loader`
+
+- Adjust prompt formatting in `summarize.go`
+
+- Add error handling for `CustomPatterns` configuration
+- Enhance error messages in `patterns_loader`
+
+- Check for patterns in multiple directories
+- Chore: reorder plugin configuration sequence in PluginRegistry.Configure method
+
+- Move CustomPatterns.Configure() before PatternsLoader.Configure()
+
+- Adjust plugin initialization order in Configure method
+- Ensure proper dependency sequence for pattern loading
+- Fix: improve git walking termination and error handling in changelog generator
+
+- Add storer import for proper git iteration control
+
+- Use storer.ErrStop instead of nil for commit iteration termination
+- Handle storer.ErrStop as expected condition in git walker
+
+- Update cache comment to clarify Unreleased version skipping
+- Change custom patterns warning to stderr output
+
+- Add storer to VSCode spell checker dictionary
+- Chore: clean up changelog and add debug logging for content length validation
+- Feat: enhance changelog generation with incremental caching and improved AI summarization
+
+- Add incremental processing for new Git tags since cache
+
+- Implement `WalkHistorySinceTag` method for efficient history traversal
+- Cache new versions and commits after AI processing
+
+- Update AI summarization prompt for better release note formatting
+- Remove conventional commit prefix stripping from commit messages
+
+- Add custom patterns directory support to plugin registry
+- Generate unique patterns file including custom directory patterns
+
+- Improve session string formatting with switch statement
+- Docs: update README for GraphQL optimization and AI summary features
+
+- Detail GraphQL API usage for faster PR fetching
+
+- Introduce AI-powered summaries via Fabric integration
+- Explain content-based caching for AI summaries
+
+- Document support for loading secrets from .env files
+- Add usage examples for new AI summary feature
+
+- Clarify project license is The MIT License
+- Docs: Update CHANGELOG
+- Feat: add AI-powered changelog generation with high-performance Go tool and comprehensive caching
+
+- Add high-performance Go changelog generator with GraphQL integration
+
+- Implement SQLite-based persistent caching for incremental updates
+- Create one-pass git history walking algorithm with concurrent processing
+
+- Add comprehensive CLI with cobra framework and tag-based caching
+- Integrate AI summarization using Fabric CLI for enhanced output
+
+- Support batch PR fetching with GitHub Search API optimization
+- Add VSCode configuration with spell checking and markdown linting
+
+- Include extensive documentation with PRD and README files
+- Implement commit-PR mapping for lightning-fast git operations
+
+- Add content hashing for change detection and cache optimization
+- Chore: optimize model ID extraction and remove redundant comment
+
+- Remove duplicate comment about reading response body
+
+- Preallocate slice capacity in extractModelIDs function
+- Initialize modelIDs slice with known capacity
+- Fix: improve error message truncation in DirectlyGetModels method
+
+- Add proper bounds checking for response body truncation
+
+- Prevent slice out of bounds errors in error messages
+- Add ellipsis indicator when response body is truncated
+
+- Improve error message clarity for debugging purposes
+- Refactor: clean up HTTP request handling and improve error response formatting
+
+- Remove unnecessary else block in HTTP request creation
+
+- Move header setting outside conditional block for clarity
+- Add TODO comment about reusing HTTP client instance
+
+- Truncate error response output to prevent excessive logging
+- Chore: refactor DirectlyGetModels to read response body once
+
+- Read response body once for efficiency
+- Use io.ReadAll for response body
+
+- Unmarshal json from bodyBytes
+- Return error with raw response bytes
+
+- Improve error handling for json parsing
+- Fix: increase error response limit and simplify model extraction logic
+
+- Increase error response limit from 500 to 1024 bytes
+
+- Add documentation comment for ErrorResponseLimit constant
+- Remove unnecessary error return from extractModelIDs function
+
+- Fix return statements in DirectlyGetModels parsing logic
+- Add TODO comment for proper context handling
+
+- Simplify model ID extraction without error propagation
+- Fix: improve error message in DirectlyGetModels to include provider name
+
+- Add provider name to API base URL error message
+
+- Enhance error context for better debugging experience
+- Include GetName() method call in error formatting
+- Feat: add context support to DirectlyGetModels method
+
+- Add context parameter to DirectlyGetModels method signature
+
+- Add nil context check with Background fallback
+- Extract magic number 500 into errorResponseLimit constant
+
+- Update DirectlyGetModels call to pass context.Background
+- Import context package in providers_config.go file
+- Refactor: replace string manipulation with url.JoinPath for models endpoint construction
+- Refactor: improve OpenAI compatible models API client with timeout and cleaner parsing
+- Refactor: extract model ID parsing logic into reusable helper function
+- Fix: enhance error messages in OpenAI compatible models endpoint with response body details
+- Feat: add direct model fetching support for non-standard providers
+
+- Add `DirectlyGetModels` function to handle non-standard API responses
+- Add Together provider configuration to ProviderMap
+
+- Implement fallback to direct model fetching when standard method fails
+- Fix: broken image link
+- Docs: update file paths to reflect new data directory structure
+
+- Move fabric logo image path to docs directory
+
+- Update patterns directory reference to data/patterns location
+- Update strategies directory reference to data/strategies location
+
+- Fix create_coding_feature README path reference
+- Update code_helper install path to cmd directory
+- Shell: fix typo
+- Fix: improve error handling and temporary file management in patterns loader
+
+- Replace println with fmt.Fprintln to stderr for errors
+
+- Use os.MkdirTemp for secure temporary directory creation
+- Remove unused time import from patterns loader
+
+- Add proper error wrapping for file operations
+- Handle RemoveAll errors with warning messages
+
+- Improve error messages with context information
+- Add explicit error checking for cleanup operations
+- Chore: improve error handling for scraping configuration in `tools.go`
+- Chore: enhance error handling and early returns in CLI
+
+- Add early return if registry is nil to prevent panics.
+- Introduce early return for non-chat tool operations.
+
+- Update error message to use original input on HTML readability failure.
+- Enhance error wrapping for playlist video fetching.
+
+- Modify temp patterns folder name with timestamp for uniqueness.
+- Improve error handling for patterns directory access.
+- Update-mod: fix generation path
+- Shell: rename command
+- Nix:pkgs:fabric: use self reference
+- Chore: remove fabric binary
+- Chore: update command handlers to return 'handled' boolean
+
+- Add `handled` boolean return to command handlers
+
+- Modify `handleSetupAndServerCommands` to use `handled`
+- Update `handleConfigurationCommands` with `handled` logic
+
+- Implement `handled` return in `handleExtensionCommands`
+- Revise `handleListingCommands` to support `handled` return
+
+- Adjust `handleManagementCommands` to return `handled`
+- Feat: refactor CLI to modularize command handling
+
+- Extract chat processing logic into separate function
+
+- Create modular command handlers for setup, configuration, listing, management, and extensions
+- Improve patterns loader with migration support and better error handling
+
+- Simplify main CLI logic by delegating to specialized handlers
+- Enhance code organization and maintainability
+
+- Add tool processing for YouTube and web scraping functionality
+- Chore: update workflow paths to reflect directory structure change
+
+- Modify trigger path to `data/patterns/**`
+
+- Update `git diff` command to new path
+- Change zip command to include `data/patterns/` directory
+- Docs: Update README with new go install commands
+- Fix: minor edit
+- Docs: update restructure guide with Homebrew and go install details
+
+- Document required Homebrew formula update for new structure.
+
+- Add new `go install` commands for all tools.
+- Specify new build path is `./cmd/fabric`.
+
+- Include link to the draft Homebrew PR.
+- Feat: add new patterns for content tagging and cognitive bias analysis
+
+- Fix static directory path in extract_patterns.py script
+
+- Add apply_ul_tags pattern for content categorization
+- Add t_check_dunning_kruger pattern for bias analysis
+
+- Update pattern descriptions with new entries
+- Sync web static data with latest patterns
+
+- Include pattern extracts for new functionality
+- Support standardized content topic classification
+
+- Enable cognitive bias identification capabilities
+- Docs: update project restructuring status and reorganize pattern scripts
+
+- Mark all 10 migration steps as completed
+
+- Add restructuring completion status section
+- Move pattern generation scripts to pattern_descriptions
+
+- Update completion checkmarks throughout migration plan
+- Document remaining external packaging verification tasks
+
+- Consolidate pattern description files under new directory
+- Confirm all binaries compile and tests pass
+
+- Note standard Go project layout achieved
+- Refactor: move common package to domain and util packages for better organization
+
+- Move domain types from common to domain package
+
+- Move utility functions from common to util package
+- Update all import statements across codebase
+
+- Reorganize OAuth storage functionality into util package
+- Move file management functions to domain package
+
+- Update test files to use new package structure
+- Maintain backward compatibility for existing functionality
+- Refactor: alias server package import as restapi for clarity
+
+- Rename the `server` package import to `restapi`.
+
+- Improve code readability and prevent naming collisions.
+- Refactor: restructure project to align with standard Go layout
+
+- Introduce `cmd` directory for all main application binaries.
+
+- Move all Go packages into the `internal` directory.
+- Rename the `restapi` package to `server` for clarity.
+
+- Consolidate patterns and strategies into a new `data` directory.
+- Group all auxiliary scripts into a new `scripts` directory.
+
+- Move all documentation and images into a `docs` directory.
+- Update all Go import paths to reflect the new structure.
+
+- Adjust CI/CD workflows and build commands for new layout.
+- Chore: refactor token path to use `authTokenIdentifier`
+- Test: add comprehensive OAuth testing suite for Anthropic plugin
+
+- Add OAuth test file with 434 lines coverage
+
+- Create mock token server for safe testing
+- Implement PKCE generation and validation tests
+
+- Add token expiration logic verification tests
+- Create OAuth transport round-trip testing
+
+- Add benchmark tests for performance validation
+- Implement helper functions for test token creation
+
+- Add comprehensive error path testing scenarios
+- Fix: update `RefreshToken` to use `tokenIdentifier` parameter
+- Refactor: replace hardcoded "claude" with configurable `authTokenIdentifier` parameter
+
+- Replace hardcoded "claude" string with `authTokenIdentifier` constant
+
+- Update `RunOAuthFlow` to accept token identifier parameter
+- Modify `RefreshToken` to use configurable token identifier
+
+- Update `exchangeToken` to accept token identifier parameter
+- Enhance `getValidToken` to use parameterized token identifier
+
+- Add token refresh attempt before full OAuth flow
+- Improve OAuth flow with existing token validation
+- Chore: improve error comparison in `TestChatter_Send_StreamingErrorPropagation`
+- Chore: remove redundant channel closure in `Send` method
+
+- Remove redundant `close(responseChan)` in `Send` method
+
+- Update `SendStream` to close `responseChan` properly
+- Modify test to reflect channel closure logic
+- Chore: rename `doneChan` to `done` and add streaming aggregation test
+
+- Rename `doneChan` variable to `done` for consistency
+
+- Add `streamChunks` field to mock vendor struct
+- Implement chunk sending logic in mock SendStream method
+
+- Add comprehensive streaming success aggregation test case
+- Verify message aggregation from multiple stream chunks
+
+- Test assistant response role and content validation
+- Ensure proper session handling in streaming scenarios
+- Feat: add test for Chatter's Send method error propagation
+
+- Implement mockVendor for testing ai.Vendor interface
+
+- Add TestChatter_Send_StreamingErrorPropagation test case
+- Verify error propagation in Chatter's Send method
+
+- Ensure session returns even on streaming error
+- Create temporary database for testing Chatter functionality
+- Chore: rename channels for clarity in `Send` method
+
+- Rename `done` to `doneChan` for clarity
+
+- Adjust channel closure for `doneChan`
+- Update channel listening logic to use `doneChan`
+- Refactor: rename `channel` variable to `responseChan` for better clarity in streaming logic
+
+- Rename `channel` variable to `responseChan` for clarity
+
+- Update channel references in goroutine defer statements
+- Pass renamed channel to `SendStream` method call
+
+- Maintain consistent naming throughout streaming flow
+- Chore: close `channel` after sending stream in `Send`
+
+- Add `channel` closure after sending stream
+
+- Ensure resource cleanup in `Send` method
+- Chore: refactor error handling and response aggregation in `Send`
+
+- Simplify response aggregation loop in `Send`
+
+- Remove redundant select case for closed channel
+- Streamline error checking from `errChan`
+
+- Ensure goroutine completion before returning
+- Chore: enhance `Chatter.Send` method with proper goroutine synchronization
+
+- Add `done` channel to track goroutine completion.
+- Replace `errChan` closure with `done` channel closure.
+
+- Ensure main loop waits for goroutine on channel close.
+- Synchronize error handling with `done` channel wait.
+- Refactor: use select to handle stream and error channels concurrently
+
+- Replace for-range loop with a non-blocking select statement.
+
+- Process message and error channels concurrently for better handling.
+- Improve the robustness of streaming error detection.
+
+- Exit loop cleanly when the message channel closes.
+- Chore: simplify error handling in streaming chat response by removing unnecessary select statement
+- Fix: improve error handling in streaming chat functionality
+
+- Add dedicated error channel for stream operations
+
+- Separate error handling from message streaming logic
+- Check for streaming errors after channel closure
+
+- Close error channel properly in goroutine cleanup
+- Remove error messages from message stream channel
+
+- Add proper error propagation for stream failures
+- Refactor: extract vendor token identifier constant and remove redundant configure call
+
+- Extract vendor token identifier into named constant
+
+- Remove redundant Configure() call from IsConfigured method
+- Use constant for token validation consistency
+
+- Improve code maintainability with centralized identifier
+- Feat: add vendor configuration validation and OAuth auto-authentication
+
+- Add IsConfigured check to vendor configuration loop
+
+- Implement IsConfigured method for Anthropic client validation
+- Remove conditional API key requirement based on OAuth
+
+- Add automatic OAuth flow when no valid token
+- Validate both API key and OAuth token configurations
+
+- Simplify API key setup question logic
+- Add token expiration checking with 5-minute buffer
+- Fix: add conditional check for TopP parameter in OpenAI client
+
+- Add zero-value check before setting TopP parameter
+
+- Prevent sending TopP when value is zero
+- Apply fix to both chat completions method
+
+- Apply fix to response parameters method
+- Ensure consistent parameter handling across OpenAI calls
+- Chore: enhance bug report template with detailed system info and installation method fields
+
+- Add detailed instructions for bug reproduction steps
+
+- Include operating system dropdown with specific architectures
+- Add OS version textarea with command examples
+
+- Create installation method dropdown with all options
+- Replace version checkbox with proper version output field
+
+- Improve formatting and organization of form sections
+- Add helpful links to installation documentation
+- Fix: make custom patterns persist correctly
+- Chore: improve directory creation logic in `configure` method
+
+- Add `fmt` package for logging errors
+
+- Check directory existence before creating
+- Log error without clearing directory value
+- Refactor: move custom patterns directory initialization to Configure method
+
+- Move custom patterns directory logic to Configure method
+- Initialize CustomPatternsDir after loading .env file
+
+- Add alphabetical sorting to pattern names retrieval
+- Override ListNames method for PatternsEntity class
+
+- Improve pattern listing with proper error handling
+- Ensure custom patterns loaded after environment configuration
+- Docs: add comprehensive custom patterns setup and usage guide
+
+- Add custom patterns directory setup instructions
+
+- Document priority system for custom vs built-in patterns
+- Include step-by-step custom pattern creation workflow
+
+- Explain update-safe custom pattern storage
+- Add table of contents entries for new sections
+
+- Document seamless integration with existing fabric commands
+- Clarify privacy and precedence behavior for custom patterns
+- Feat: add custom patterns directory support with environment variable configuration
+
+- Add custom patterns directory support via environment variable
+
+- Implement custom patterns plugin with registry integration
+- Override main patterns with custom directory patterns
+
+- Expand home directory paths in custom patterns config
+- Add comprehensive test coverage for custom patterns functionality
+
+- Integrate custom patterns into plugin setup workflow
+- Support pattern precedence with custom over main patterns
+- Fix: remove duplicate API key setup question in Anthropic client
+- Refactor: extract OAuth functionality from anthropic client to separate module
+
+- Remove OAuth transport implementation from main client
+
+- Extract OAuth flow functions to separate module
+- Remove unused imports and constants from client
+
+- Replace inline OAuth transport with NewOAuthTransport call
+- Update runOAuthFlow to exported RunOAuthFlow function
+
+- Clean up token management and refresh logic
+- Simplify client configuration by removing OAuth internals
+- Feat: add OAuth login support for Anthropic API configuration
+- Feat: remove OAuth flow functions for simplified token handling
+- Chore: simplify base URL configuration in `configure` method
+
+- Remove redundant base URL trimming logic
+
+- Append base URL directly without modification
+- Eliminate conditional check for API version suffix
+- Feat: enhance OAuth authentication flow with automatic re-authentication and timeout handling
+
+- Add automatic OAuth flow initiation when no token exists
+
+- Implement fallback re-authentication when token refresh fails
+- Add timeout contexts for OAuth and refresh operations
+
+- Create context-aware OAuth flow and token exchange functions
+- Enhance error handling with graceful authentication recovery
+
+- Add user input timeout protection for authorization codes
+- Preserve refresh tokens during token exchange operations
+- Refactor: remove OAuth endpoint logic and standardize on v2 API endpoint
+
+- Remove OAuth-specific v1 endpoint handling logic
+
+- Standardize all API calls to use v2 endpoint
+- Simplify baseURL configuration by removing conditional branching
+
+- Update endpoint logic to always append v2 suffix
+- Feat: implement OAuth token refresh and persistent storage for Claude authentication
+
+- Add automatic OAuth token refresh when expired
+
+- Implement persistent token storage using common OAuth storage
+- Remove deprecated AuthToken setting from client configuration
+
+- Add token validation with 5-minute expiration buffer
+- Create refreshToken function for seamless token renewal
+
+- Update OAuth flow to save complete token information
+- Enhance error handling for OAuth authentication failures
+
+- Simplify client configuration by removing manual token management
+- Feat: add OAuth authentication support for Anthropic Claude
+
+- Move golang.org/x/oauth2 from indirect to direct dependency
+- Add OAuth login option for Anthropic client
+
+- Implement PKCE OAuth flow with browser integration
+- Add custom HTTP transport for OAuth Bearer tokens
+
+- Support both API key and OAuth authentication methods
+- Add Claude Code system message for OAuth sessions
+
+- Update REST API to handle OAuth tokens
+- Improve environment variable name sanitization with regex
+- Feat: add advanced image generation parameters for OpenAI models
+
+- Add four new image generation CLI flags
+
+- Implement validation for image parameter combinations
+- Support size, quality, compression, and background controls
+
+- Add comprehensive test coverage for new parameters
+- Update shell completions for new image options
+
+- Enhance README with detailed image generation examples
+- Fix PowerShell code block formatting issues
+- Refactor: extract supported models list to shared constant for image generation validation
+
+• Extract hardcoded model lists into shared constant
+• Create ImageGenerationSupportedModels variable for reusability
+• Update supportsImageGeneration function to use shared constant
+• Refactor error messages to reference centralized model list
+• Add documentation comment for supported models variable
+• Import strings package in test file
+• Consolidate duplicate model validation logic across files
+- Merge branch 'main' into 0704-image-tool-model-validation
+- Feat: add model validation for image generation support
+
+- Add model field to `BuildChatOptions` method
+
+- Implement `supportsImageGeneration` function for model checks
+- Validate model supports image generation in `sendResponses`
+
+- Remove `mars-colony.png` from repository
+- Add tests for `supportsImageGeneration` function
+
+- Validate image file support in `TestModelValidationLogic`
+- Feat: add image file validation and format detection for image generation
+
+• Add image file path validation with extension checking
+• Implement dynamic output format detection from file extensions
+• Update BuildChatOptions method to return error for validation
+• Add comprehensive test coverage for image file validation
+• Upgrade YAML library from v2 to v3
+• Update shell completions to reflect supported image formats
+• Add error handling for existing file conflicts
+• Support PNG, JPEG, JPG, and WEBP image formats
+- Addded tutorial as a tag.
+- Chore: refactor image generation constants for clarity and reuse
+
+- Define `ImageGenerationResponseType` constant for response handling
+
+- Define `ImageGenerationToolType` constant for tool type usage
+- Update `addImageGenerationTool` to use defined constants
+
+- Refactor `extractAndSaveImages` to use response type constant
+- Feat: add web search and image file support to fabric CLI
+
+- Add web search tool for Anthropic and OpenAI models
+
+- Add search location parameter for web search results
+- Add image file output option with format support
+
+- Update zsh completion with new search and image flags
+- Update bash completion with new option handling logic
+
+- Update fish completion with search and image descriptions
+- Support PNG, JPG, JPEG, GIF, BMP image formats
+- Feat: add image generation support with OpenAI image generation model
+
+- Add `--image-file` flag for saving generated images
+
+- Implement image generation tool integration with OpenAI
+- Support image editing with attachment input files
+
+- Add comprehensive test coverage for image features
+- Update documentation with image generation examples
+
+- Fix HTML formatting issues in README
+- Improve PowerShell code block indentation
+
+- Clean up help text formatting and spacing
+- Fixed ul tag applier.
+- Updated ul tag prompt.
+- Added the UL tags pattern.
+- Docs: update README with new web search feature details
+- Feat: add web search tool support for OpenAI models with citation formatting
+
+- Enable web search tool for OpenAI models
+
+- Add location parameter support for search results
+- Extract and format citations from search responses
+
+- Implement citation deduplication to avoid duplicates
+- Add comprehensive test coverage for search functionality
+
+- Update CLI flag description to include OpenAI
+- Format citations as markdown links with sources
+- Chore: refactor `Send` method to optimize string building
+
+- Add `sourcesHeader` constant for citation section title.
+
+- Use `strings.Builder` to construct result efficiently.
+- Append sources header and citations in result builder.
+
+- Update `ret` to use constructed string from builder.
+- Chore: remove unused web-search tool parameters for simplification
+
+- Remove unused `AllowedDomains` and `MaxUses` parameters
+
+- Simplify `webTool` definition in `buildMessageParams` method
+- Refactor: extract web search tool constants in anthropic plugin
+
+- Add webSearchToolName constant for tool identification
+
+- Add webSearchToolType constant for tool versioning
+- Replace hardcoded string literals with named constants
+
+- Improve code maintainability through constant extraction
+- Chore: update `formatOptions` to include search options display
+
+- Add search option status to `formatOptions`
+
+- Include `SearchLocation` in formatted output if specified
+- Feat: add web search tool support for Anthropic models
+
+- Add --search flag to enable web search
+
+- Add --search-location for timezone-based results
+- Pass search options through ChatOptions struct
+
+- Implement web search tool in Anthropic client
+- Format search citations with sources section
+
+- Add comprehensive tests for search functionality
+- Remove plugin-level web search configuration
+- Merge branch 'main' of <https://github.com/amancioandre/Fabric>
+- Fix: sections as heading 1, typos
+- Merge branch 'danielmiessler:main' into main
+- Feat: adds pattern telos check dunning kruger
+- Feat: handle JSONDecodeError in `load_existing_file` gracefully
+
+- Add JSONDecodeError handling with warning message.
+
+- Initialize with empty list on JSON decode failure.
+- Reorder pattern processing to reduce redundant logs.
+
+- Remove redundant directory check logging.
+- Ensure new pattern processing is logged correctly.
+- Feat: add new patterns for code review, alpha extraction, and server analysis
+
+- Add `review_code`, `extract_alpha`, and `extract_mcp_servers` patterns.
+- Refactor the pattern extraction script for improved clarity.
+
+- Add docstrings and specific error handling to script.
+- Improve formatting in the pattern management README.
+
+- Fix typo in the `analyze_bill_short` pattern description.
+- Feat: add comprehensive code review pattern for systematic analysis
+
+- Add new code review system prompt
+
+- Define principal engineer reviewer role
+- Include systematic analysis framework
+
+- Specify markdown output format
+- Add prioritized recommendations section
+
+- Include detailed feedback structure
+- Provide example Python review
+
+- Cover security, performance, readability
+- Add error handling guidelines
+- Chore: update GitHub Actions to use bash shell in release job
+
+- Adjust repository_dispatch type spacing for consistency
+
+- Use bash shell for creating release if absent
+- Updated alpha post.
+- Feat(openai): add support for multi-content user messages in chat completions
+
+- Enhance user message conversion to support multi-content.
+
+- Add capability to process image URLs in messages.
+- Build multi-part messages with both text and images.
+- Chore: update `NewClient` to use `NewClientCompatibleWithResponses`
+
+- Modify `NewClient` to call `NewClientCompatibleWithResponses`
+
+- Add support for response handling in client initialization
+- Feat: simplify `supportsResponsesAPI`
+- Refactor: extract common message conversion logic to reduce duplication
+
+- Extract shared message conversion to convertMessageCommon
+
+- Reuse logic between chat and response APIs
+- Maintain existing text-only behavior for chat
+
+- Support multi-content messages in response API
+- Reduce code duplication across converters
+
+- Preserve backward compatibility for both APIs
+- Fix: move channel close to defer statement in OpenAI streaming methods
+
+- Move close(channel) to defer statement
+
+- Ensure channel closes even on errors
+- Apply fix to sendStreamChatCompletions method
+
+- Apply fix to sendStreamResponses method
+- Improve error handling reliability
+
+- Prevent potential channel leaks
+- Feat: add chat completions API support for OpenAI-compatible providers
+
+- Add chat completions API fallback for non-Responses API providers
+
+- Implement `sendChatCompletions` and `sendStreamChatCompletions` methods
+- Introduce `buildChatCompletionParams` to construct API request parameters
+
+- Add `ImplementsResponses` flag to track provider API capabilities
+- Update provider configurations with Responses API support status
+
+- Enhance `Send` and `SendStream` methods to use appropriate API endpoints
+- Feat: migrate OpenAI plugin to use new responses API instead of chat completions
+
+- Replace chat completions with responses API
+- Update message conversion to new format
+
+- Refactor streaming to handle event types
+- Remove frequency and presence penalty params
+
+- Replace seed parameter with max tokens
+- Update test cases for new API
+
+- Add response text extraction method
+- Updated extract alpha.
+- Updated extract alpha.
+- Added extract_alpha as kind of an experiment.
+- Refactor: abstract chat message structs and migrate to official openai-go SDK
+
+- Introduce local `chat` package for message abstraction
+
+- Replace sashabaranov/go-openai with official openai-go SDK
+- Update OpenAI, Azure, and Exolab plugins for new client
+
+- Refactor all AI providers to use internal chat types
+- Decouple codebase from third-party AI provider structs
+
+- Replace deprecated `ioutil` functions with `os` equivalents
+- Chore: improve release creation to gracefully handle pre-existing tags.
+
+- Check if a release exists before attempting creation.
+
+- Suppress error output from `gh release view` command.
+- Add an informative log when release already exists.
+- Docs: add DeepWiki badge and fix minor typos in README
+
+- Add DeepWiki badge to README header
+
+- Fix typo "chatbots" to "chat-bots"
+- Correct "Perlexity" to "Perplexity"
+
+- Fix "distro" to "Linux distribution"
+- Add alt text to contributor images
+
+- Update dependency versions in go.mod
+- Remove unused soup dependency
+- Fix typos on README.md
+- Feat: add support for new OpenAI search and research model variants
+
+- Add slices import for array operations
+
+- Define new search preview model names
+- Add mini search preview variants
+
+- Include deep research model support
+- Add June 2025 dated model versions
+
+- Replace hardcoded check with slices.Contains
+- Support both prefix and exact model matching
+- Add extract_mcp_servers pattern
+New pattern to extract mentions of MCP (Model Context Protocol) servers from content. Identifies server names, features, capabilities, and usage examples.
+🤖 Generated with [Claude Code](<https://claude.ai/code)>
+Co-Authored-By: Claude <noreply@anthropic.com>
+- Chore: fix endpoint calls from frontend
+- Feat: add dedicated YouTube transcript API endpoint
+
+- Add new YouTube handler for transcript requests
+
+- Create `/youtube/transcript` POST endpoint route
+- Add request/response types for YouTube API
+
+- Support language and timestamp options
+- Update frontend to use new endpoint
+
+- Remove chat endpoint dependency for transcripts
+- Validate video vs playlist URLs properly
+- Refactor(ai): unify assistant and user message formatting in dryrun
+
+- Unify assistant and user message formatting logic.
+
+- Use `formatMultiContentMessage` for assistant role messages.
+- Improve dryrun support for multi-part message content.
+- Fix: correctly combine text and attachments in raw mode sessions
+
+- Combine user text and attachments into MultiContent.
+
+- Preserve existing non-text parts like images.
+- Use standard content field for text-only messages.
+- Feat: add MultiContent support to chat message construction in raw mode
+- Refactor: extract message and option formatting logic into reusable methods
+
+- Extract multi-content message formatting to dedicated method
+
+- Create formatMessages method for all message types
+- Add formatOptions method for chat options display
+
+- Replace inline formatting with strings.Builder usage
+- Reduce code duplication between Send and SendStream
+
+- Improve code organization and maintainability
+- Fix(chatter): prevent duplicate user message when applying patterns
+
+- Prevent adding user message twice when using patterns.
+
+- Ensure multi-part content is always included in session.
+- Chore: fix formatting.
+- Chore: clean up comments in `chatter.go` for clarity
+- Chore: simplify user message appending logic in BuildSession
+
+- Remove conditional check for pattern name in message appending.
+- Always append user message if it exists in request.
+- Feat: enhance dryrun client to display multi-content user messages
+
+- Handle multi-content messages for the user role.
+
+- Display image URLs from user messages in output.
+- Update both `Send` and `SendStream` methods.
+
+- Retain existing behavior for simple text messages.
+- Feat: allow combining user messages and attachments with patterns
+
+- Allow user messages and attachments with patterns.
+- Append user message to session regardless of pattern.
+
+- Refactor chat request builder for improved clarity.
+- Chore: reformat `pattern_descriptions.json` to improve readability
+
+- Reformat JSON `tags` array to display on new lines.
+
+- Update `write_essay` pattern description for clarity.
+- Apply consistent formatting to both data files.
+- Chore: Fixes caught by review
+- Chore: rename essay patterns to clarify Paul Graham style and author variable usage
+
+- Rename `write_essay` to `write_essay_pg` for Paul Graham style
+
+- Rename `write_essay_by_author` to `write_essay` with author variable
+- Update pattern descriptions to reflect naming changes
+
+- Fix duplicate `write_essay_pg` entry in pattern descriptions
+- Feat: add  new pattern and update pattern metadata files.
+
+- Add tags and descriptions for five new creative and analytical patterns.
+
+- Introduce `analyze_terraform_plan` for infrastructure review.
+- Add `write_essay_by_author` for stylistic writing.
+
+- Include `summarize_board_meeting` for corporate notes.
+- Introduce `create_mnemonic_phrases` for memory aids.
+
+- Update and clean pattern description data files.
+- Sort the pattern explanations list alphabetically.
+- Merge branch 'danielmiessler:main' into main
+- Chore: refactor ProviderMap for dynamic URL template handling
+
+- Add `os` and `strings` packages to imports
+
+- Implement dynamic URL handling with environment variables
+- Refactor provider configuration to support URL templates
+
+- Reorder providers for consistent key order in ProviderMap
+- Extract and parse template variables from BaseURL
+
+- Use environment variables or default values for templates
+- Replace template with actual values in BaseURL
+- Chore: refactor ProviderMap for dynamic URL template handling
+
+- Add `os` and `strings` packages to imports
+
+- Implement dynamic URL handling with environment variables
+- Refactor provider configuration to support URL templates
+
+- Reorder providers for consistent key order in ProviderMap
+- Extract and parse template variables from BaseURL
+
+- Use environment variables or default values for templates
+- Replace template with actual values in BaseURL
+- Chore: refactor Bedrock client to improve error handling and add interface compliance
+
+- Add ai.Vendor interface implementation check
+
+- Improve error handling with wrapped errors
+- Add AWS region validation logic
+
+- Fix resource cleanup in SendStream
+- Add nil checks for response parsing
+
+- Update context usage to Background()
+- Add user agent constants
+
+- Enhance code documentation
+- Bedrock region handling - updated to set region value correctly if it exists in the config
+- Bedrock region handling - updated to fix bad pointer reference
+- Fixed bedrock region handling
+- Updated hasAWSCredentials to also check for AWS_DEFAULT_REGION when access keys are configured in the environment
+- Updated paper analyzer.
+- Updated paper analyzer. Went back to my own format.
+- Chore: removed a directory of raycast scripts sitting in the patterns/ directory
+- Refactor(ChatService): clean up message stream and pattern output methods
+
+- Refactor `cleanPatternOutput` to use a dedicated return variable.
+- Hoist `processResponse` function for improved stream readability.
+
+- Remove unnecessary whitespace and trailing newlines from file.
+- Updated paper analyzer.
+- Updated paper analyzer.
+- Feat: add `ApplyPattern` route for applying patterns with variables
+
+- Create `PatternApplyRequest` struct for request body parsing
+- Implement `ApplyPattern` method for POST /patterns/:name/apply
+
+- Register manual routes for pattern operations in `NewPatternsHandler`
+- Refactor `Get` method to return raw pattern content
+
+- Merge query parameters with request body variables in `ApplyPattern`
+- Use `StorageHandler` for pattern-related storage operations
+- Feat: add pattern variables support to REST API chat endpoint
+
+- Add Variables field to PromptRequest struct
+
+- Pass pattern variables through chat handler
+- Create API variables documentation example
+
+- Add pattern variables UI in web interface
+- Create pattern variables store in Svelte
+
+- Include variables in chat service requests
+- Add JSON textarea for variable input
+- Updated sanitization instructions.
+- Updated markdown cleaner.
+- Updated markdown cleaner.
+- Feat: add citation support to perplexity AI responses
+
+- Add citation extraction from API responses
+
+- Append citations section to response content
+- Format citations as numbered markdown list
+
+- Handle citations in streaming responses
+- Store last response for citation access
+
+- Add citations after stream completion
+- Maintain backward compatibility with responses
+- Update README.md
+- Update README.md
+Updated readme.
+- Update README.md
+An update to the intro text, describing Fabric's utility to most people.
+- Chore: update README with Perplexity AI support instructions
+
+- Add instructions for configuring Perplexity AI with Fabric
+- Include example command for querying Perplexity AI
+
+- Retain existing instructions for YouTube transcription changes
+- Feat: add Perplexity AI provider support with token limits and streaming
+
+- feat: Add `MaxTokens` field to `ChatOptions` struct for response control
+
+- feat: Integrate Perplexity client into core plugin registry initialization
+- build: Add perplexity-go/v2 dependency to enable API interactions
+
+- feat: Implement stream handling in Perpexlty client using sync.WaitGroup
+- fix: Correct parameter types for penalty options in API requests
+-
+<<https://github.com/sgaunet/perlexipty-go>> - Client library used
+- Check for AWS_PROFILE or AWS_ROLE_SESSION_NAME environment variables
+- Refactor: extract common yt-dlp logic to reduce code duplication in YouTube plugin
+
+- Extract shared yt-dlp logic into tryMethodYtDlpInternal helper
+
+- Add processVTTFileFunc parameter for flexible VTT processing
+- Implement language matching for 2-char language codes
+
+- Refactor tryMethodYtDlp to use new helper function
+- Refactor tryMethodYtDlpWithTimestamps to use helper
+
+- Reduce code duplication between transcript methods
+- Maintain existing functionality with cleaner structure
+- Updated extract insights.
+- Updated extract insights.
+- Feat: add AWS credential detection for Bedrock client initialization
+
+- Add hasAWSCredentials helper function
+
+- Check for AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+- Look for AWS shared credentials file
+
+- Support custom AWS_SHARED_CREDENTIALS_FILE path
+- Default to ~/.aws/credentials location
+
+- Only initialize Bedrock client if credentials exist
+- Prevent AWS SDK credential search failures
+- Updated prompt.
+- Dynamically fetch and list available foundation models and inference profiles
+- Updated markdown sanitizer.
+- Chore: remove duplicate/outdated patterns
+- Updated markdown cleaner.
+- Updated markdown cleaner.
+- Ci: improve version update workflow to prevent race conditions
+
+- Add concurrency control to prevent simultaneous runs
+
+- Pull latest main branch changes before tagging
+- Fetch all remote tags before calculating version
+- Feat: add Save method to PatternsEntity for persisting patterns to filesystem
+
+- Add Save method to PatternsEntity struct
+
+- Create pattern directory with proper permissions
+- Write pattern content to system pattern file
+
+- Add comprehensive test for Save functionality
+- Verify directory creation and file contents
+
+- Handle errors for directory and file operations
+- Feat: create mnemonic phrase pattern
+Add a new pattern for generating mnemonic phrases from diceware words. This includes two markdown files defining the user guide, and system implementation details.
+- Add Bedrock plugin
+This commits adds support for using Amazon Bedrock within fabric.
+- *fix: replace Unix-specific file operations with cross-platform alternatives
+
+- Replace hardcoded `/tmp` with `os.TempDir()` for paths
+
+- Use `filepath.Join()` instead of string concatenation
+- Remove Unix `find` command dependency completely
+
+- Add new `findVTTFiles()` method using `filepath.Walk()`
+- Make VTT file discovery work on Windows
+
+- Improve error handling for file operations
+- Maintain backward compatibility with existing functionality
+- Feat: cleanup after `yt-dlp` addition
+
+- Update README with yt-dlp requirement for transcripts
+- Ensure the errors are clear and actionable.
+- Refactor: replace web scraping with yt-dlp for YouTube transcript extraction
+
+- Remove unreliable YouTube API scraping methods
+
+- Add yt-dlp integration for transcript extraction
+- Implement VTT subtitle parsing functionality
+
+- Add timestamp preservation for transcripts
+- Remove soup HTML parsing dependency
+
+- Add error handling for missing yt-dlp
+- Create temporary directory management
+
+- Support multiple subtitle format fallbacks
+- Fix: fix web search tool location
+- Chore(deps): bump brace-expansion
+Bumps the npm_and_yarn group with 1 update in the /web directory: [brace-expansion](<https://github.com/juliangruber/brace-expansion).>
+
+Updates `brace-expansion` from 1.1.11 to 1.1.12
+
+- [Release notes](<https://github.com/juliangruber/brace-expansion/releases)>
+- [Commits](<https://github.com/juliangruber/brace-expansion/compare/1.1.11...v1.1.12)>
+updated-dependencies:
+- dependency-name: brace-expansion
+  dependency-version: 1.1.12
+  dependency-type: indirect
+  dependency-group: npm_and_yarn
+Signed-off-by: dependabot[bot] <support@github.com>
+- Fix: Add configurable HTTP timeout for Ollama client
+Add a new setup question to configure the HTTP timeout duration for
+Ollama requests. The default value is set to 20 minutes.
+- Feat: search tool result collection
+- Feat: search tool working
+- GitButler Workspace Commit
+This is a merge commit the virtual branches in your workspace.
+Due to GitButler managing multiple virtual branches, you cannot switch back and
+forth between git branches and virtual branches easily.
+If you switch to another branch, GitButler will need to be reinitialized.
+If you commit on this branch, GitButler will throw it away.
+Here are the branches that are currently applied:
+- improve-create-prd (refs/gitbutler/improve-create-prd)
+For more information about what we're doing here, check out our docs:
+<https://docs.gitbutler.com/features/virtual-branches/integration-branch>
+- Feat: Enhance the PRD Generator's identity and purpose
+The changes in this commit expand the identity and purpose of the PRD Generator
+to provide more clarity on its role and the expected output. The key changes
+include:
+- Defining the Generator's purpose as transforming product ideas into a
+  structured PRD that ensures clarity, alignment, and precision in product
+  planning and execution.
+
+- Outlining the key sections typically found in a PRD that the Generator should
+  cover, such as Overview, Objectives, Target Audience, Features, User Stories,
+  Functional and Non-functional Requirements, Success Metrics, and Timeline.
+
+- Providing more detailed instructions on the expected output format, structure,
+  and content, including the use of Markdown, labeled sections, bullet points,
+  tables, and highlighting of priorities or MVP features.
+- Feat: add Terraform plan analyzer pattern for infrastructure change assessment
+
+- Create new pattern for analyzing Terraform plans
+- Add identity defining expert plan analyzer role
+
+- Include focus on security, cost, and compliance
+- Define three output sections for summaries
+
+- Specify 20-word sentence summary requirement
+- List 10 critical changes with word limits
+
+- Include 5 key takeaways section format
+- Add markdown formatting output instructions
+
+- Require numbered lists over bullet points
+- Prohibit warnings and duplicate content
+- Feat: add AIML provider to OpenAI compatible providers configuration
+
+- Add AIML provider configuration
+
+- Set AIML base URL to api.aimlapi.com/v1
+- Expand supported OpenAI compatible providers list
+
+- Enable AIML API integration support
+- Updated output.
+- Updated output.
+- Updated output.
+- Updated output.
+- Updated output.
+- Updated output.
+- Updated output.
+- Added simpler paper analyzer, updated the output.
+- Added simpler paper analyzer.
+- Feat: upgrade PDF.js to v4.2 and refactor worker initialization
+
+- Add `.browserslistrc` to define target browser versions.
+- Upgrade `pdfjs-dist` dependency from v2.16 to v4.2.67.
+
+- Upgrade `nanoid` dependency from v4.0.2 to v5.0.9.
+- Introduce `pdf-config.ts` for centralized PDF.js worker setup.
+
+- Refactor `PdfConversionService` to use new PDF worker configuration.
+- Add static `pdf.worker.min.mjs` to serve PDF.js worker.
+
+- Update Vite configuration for ESNext build target and PDF.js.
+- Feat: add centralized environment configuration for Fabric base URL
+
+- Create environment config module for URL handling
+- Add getFabricBaseUrl() function with server/client support
+
+- Add getFabricApiUrl() helper for API endpoints
+- Configure Vite to inject FABRIC_BASE_URL client-side
+
+- Update proxy targets to use environment variable
+- Add TypeScript definitions for window config
+
+- Support FABRIC_BASE_URL env var with fallback
+- Fix typo in script name
+- Docs: reorganize web documentation and add installation scripts
+
+- Move legacy documentation files to web/legacy/
+
+- Update web README with installation instructions
+- Add convenience scripts for npm and pnpm installation
+
+- Update all package dependencies to latest versions
+- Add PDF-to-Markdown installation steps to README
+
+- Remove duplicate documentation files
+- Update meeting summary template with word count requirement
+AI:
+Add minimum word count for context section in board summary
+- Merge branch 'danielmiessler:main' into main
+- Add board meeting summary pattern template
+- Feat: add automatic raw mode detection for specific AI models
+
+- Add model-specific raw mode detection logic
+
+- Check Ollama llama2/llama3 models for raw mode
+- Check OpenAI o1/o3/o4 models for raw mode
+
+- Use model from options or default chatter
+- Auto-enable raw mode when vendor requires it
+
+- Import strings package for prefix matching
+- Feat: add NeedsRawMode method to AI vendor interface
+
+- Add NeedsRawMode to Vendor interface
+
+- Implement NeedsRawMode in all AI clients
+- Return false for all implementations
+
+- Support model-specific raw mode detection
+- Enable future raw mode requirements
+- Feat: add support for Anthropic Claude 4 models and update SDK to v1.2.0
+CHANGES
+
+- Upgrade `anthropic-sdk-go` dependency to version `v1.2.0`.
+- Integrate new Anthropic Claude 4 Opus and Sonnet models.
+
+- Remove deprecated Claude 2.0 and 2.1 models from list.
+- Adjust model type casting for `anthropic-sdk-go v1.2.0` compatibility.
+
+- Refresh README: announce Claude 4, update date, fix links.
+- Refactor: improve raw mode handling in BuildSession
+
+- Fix system message handling with patterns in raw mode
+
+- Prevent duplicate inputs when using patterns
+- Add conditional logic for pattern vs non-pattern scenarios
+
+- Simplify message construction with clearer variable names
+- Improve code comments for better readability
+- Refactor: improve message handling for raw mode and Anthropic client
+
+- Clarify raw mode message handling in BuildSession
+
+- Fix pattern-based message handling in non-raw mode
+- Refactor Anthropic client message normalization
+
+- Add proper handling for empty message arrays
+- Implement user/assistant message alternation for Anthropic
+
+- Preserve system messages in Anthropic conversations
+- Add safeguards for message sequence validation
+- Add authentification for ollama instance
+- Refactor content structure in system.md for clarity and readability
+
+- Improved formatting of the introduction and content summary sections for better flow.
+- Consolidated repetitive sentences and enhanced the overall coherence of the text.
+
+- Adjusted bullet points and numbering for consistency and easier comprehension.
+- Ensured that key concepts are clearly articulated and visually distinct to aid understanding.
+- Docs: fix grammar in nuclei template instructions
+- Docs: correct Anthropic spelling in notes
+- Docs: fix typos in web README
+- Docs: fix spelling in PR 1284 update notes
+- Docs: fix spelling in pattern management guide
+
 ## v1.4.300 (2025-08-28)
 
 ### PR [#1732](https://github.com/danielmiessler/Fabric/pull/1732) by [ksylvan](https://github.com/ksylvan): CI Infra: Changelog Generation Tool + Docker Image Pubishing
